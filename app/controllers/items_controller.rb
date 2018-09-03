@@ -4,10 +4,10 @@ class ItemsController < ApplicationController
 		@item =Item.all.order("created_at DESC")
 	end
 	def new
-		@item = Item.new
+		@item = current_user.items.build
 	end
 	def create
-		@item = Item.new(item_params)
+		@item = current_user.items.build(item_params)
 		if @item.save
 			redirect_to  root_path
 		else
@@ -26,7 +26,6 @@ class ItemsController < ApplicationController
 	def destroy
 		@item.destroy
 		redirect_to root_path
-
 	end
 	private
 	def item_params
